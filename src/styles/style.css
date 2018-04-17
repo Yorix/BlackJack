@@ -1,0 +1,110 @@
+.root {
+    -fx-background-color: #322232;
+}
+
+.button {
+    -fx-background-color: #8f5f8f;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #221122;
+    -fx-pref-width: 150px;
+    -fx-effect: dropshadow(gaussian , rgba(0,0,0,0.5) , 1,1,1,1);
+}
+
+.button:hover {
+    -fx-background-color: #805080;
+}
+
+#btnPass {
+    -fx-pref-width: 70px;
+    -fx-pref-height: 70px;
+}
+
+#btnDeck {
+    -fx-pref-width: 97px;
+    -fx-pref-height: 146px;
+    -fx-padding: 0px;
+    -fx-effect: dropshadow(gaussian , rgba(50,0,0,0.8) , 0,3,3,3);
+}
+
+.label, .check-box {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #aaaaaa;
+}
+
+.text-field, .combo-box, .check-box .box {
+    -fx-background-color: #261400;
+    -fx-background-radius: 10px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #aa5500;
+}
+
+.combo-box {
+    -fx-pref-width: 5em;
+}
+
+.list-view, .list-cell {
+    -fx-background-color: #261400;
+    -fx-text-fill: #aa5500;
+    -fx-background-radius: 10px;
+}
+
+.list-cell:hover {
+    -fx-background-color: #aa5500;
+    -fx-text-fill: #261400;
+}
+
+#card-list-view {
+    -fx-background-color: #2a1a2a;
+}
+
+#card-list-view .list-cell {
+    -fx-background-color: transparent;
+}
+
+#card-list-view .list-cell:empty, .table-cell:empty {
+    -fx-opacity: 0;
+}
+
+#card-list-view .list-cell:hover {
+    -fx-background-color: #211121;
+}
+
+#card-list-view .list-cell:selected {
+    -fx-background-color: #af5faf;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-pref-height: 98px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(#322232 0%, #211121 100%);
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #855585;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #c999c9;
+    -fx-alignment: center;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-table-cell-border-color, #322232;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -fx-table-cell-border-color, #302030;
+}
