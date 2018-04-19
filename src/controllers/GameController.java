@@ -177,8 +177,9 @@ public class GameController implements Initializable {
                         super.updateItem(item, empty);
                         if (item == null || empty || item.getImg() == null)
                             setGraphic(null);
-                        else
+                        else {
                             setGraphic(new ImageView(item.getImg()));
+                        }
                     }
                 };
             }
@@ -187,18 +188,14 @@ public class GameController implements Initializable {
     }
 
     private void initListeners(ListView<Card> cardListView) {
-        cardListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            int sum = 0;
-            for (Card card : cardListView.getSelectionModel().getSelectedItems()) {
-                sum += card.getRank().getValue();
-            }
-            if (sum == 0) lblCardValue.setVisible(false);
-            else lblCardValue.setVisible(true);
-            lblCardValue.setText(resourceBundle.getString("key.picked.cards.points") + sum);
-        });
+        cardListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> changedOvrrd(cardListView)
+        );
 
         cardListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (cardListView.isFocusTraversable()) {
+            if (newValue) {
+                changedOvrrd(cardListView);
+            } else {
                 cardListView.getSelectionModel().clearSelection();
             }
         });
@@ -208,5 +205,15 @@ public class GameController implements Initializable {
                 cardListView.getSelectionModel().clearSelection();
             }
         });
+    }
+
+    private void changedOvrrd(ListView<Card> listView) {
+        int sum = 0;
+        for (Card card : listView.getSelectionModel().getSelectedItems()) {
+            sum += card.getRank().getValue();
+        }
+        if (sum == 0) lblCardValue.setVisible(false);
+        else lblCardValue.setVisible(true);
+        lblCardValue.setText(resourceBundle.getString("key.picked.cards.points") + sum);
     }
 }
