@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -24,17 +23,9 @@ public class GameController implements Initializable {
     @FXML
     private TableColumn<Player, String> clmnName, clmnPoints, clmnWins;
     @FXML
-    private Label lblCardValue;
+    private Label lblCardValue, lblRoundInfo;
     @FXML
-    private Label lblRoundInfo;
-    @FXML
-    private Button btnPass;
-    @FXML
-    private Button btnDeck;
-    @FXML
-    private Button btnNextRound;
-    @FXML
-    private Button btnNewGame;
+    private Button btnPass, btnDeck, btnNextRound, btnNewGame;
 
     private ResourceBundle resourceBundle;
     private Stage gameStage;
@@ -52,7 +43,6 @@ public class GameController implements Initializable {
 
     public void passPressed() {
         table.nextMove();
-
     }
 
     public void move() {
@@ -70,7 +60,7 @@ public class GameController implements Initializable {
         btnDeck.setVisible(false);
         btnPass.setVisible(false);
         btnNextRound.setVisible(true);
-        btnNextRound.setText(resourceBundle.getString("key.startRound"));
+        btnNextRound.setText(resourceBundle.getString("btn.start_round"));
         setRoundInfo();
     }
 
@@ -78,7 +68,7 @@ public class GameController implements Initializable {
         btnDeck.setVisible(false);
         btnPass.setVisible(false);
         btnNextRound.setVisible(true);
-        btnNextRound.setText(resourceBundle.getString("key.restartRound"));
+        btnNextRound.setText(resourceBundle.getString("btn.restart_round"));
         setRoundInfo();
     }
 
@@ -86,7 +76,7 @@ public class GameController implements Initializable {
         btnDeck.setVisible(false);
         btnPass.setVisible(false);
         btnNextRound.setVisible(true);
-        btnNextRound.setText(resourceBundle.getString("key.bonusRound"));
+        btnNextRound.setText(resourceBundle.getString("btn.bonus_round"));
         setRoundInfo();
     }
 
@@ -111,38 +101,38 @@ public class GameController implements Initializable {
         parentStage.show();
     }
 
-    public void setGameStage(Stage gameStage) {
+    void setGameStage(Stage gameStage) {
         this.gameStage = gameStage;
     }
 
-    public void setParentStage(Stage parentStage) {
+    void setParentStage(Stage parentStage) {
         this.parentStage = parentStage;
     }
 
     private void setRoundInfo() {
         StringBuilder roundInfo = new StringBuilder();
         roundInfo
-                .append(resourceBundle.getString("key.round"))
+                .append(resourceBundle.getString("lbl.round"))
                 .append(table.getRoundNumber())
-                .append(resourceBundle.getString("key.of"))
+                .append(resourceBundle.getString("lbl.of"))
                 .append(table.getNumberOfRounds())
                 .append(". ");
         if (btnDeck.isVisible()) {
             roundInfo
-                    .append(resourceBundle.getString("key.move"))
+                    .append(resourceBundle.getString("lbl.move"))
                     .append(table.getCurrentPlayer());
-        } else if (btnNextRound.isVisible() && btnNextRound.getText().equals(resourceBundle.getString("key.startRound"))
-                || btnNextRound.getText().equals(resourceBundle.getString("key.bonusRound"))) {
+        } else if (btnNextRound.isVisible() && btnNextRound.getText().equals(resourceBundle.getString("btn.start_round"))
+                || btnNextRound.getText().equals(resourceBundle.getString("btn.bonus_round"))) {
             roundInfo
                     .append(table.getRoundWinner())
-                    .append(resourceBundle.getString("key.won"));
-        } else if (btnNextRound.isVisible() && btnNextRound.getText().equals(resourceBundle.getString("key.restartRound"))) {
+                    .append(resourceBundle.getString("lbl.won"));
+        } else if (btnNextRound.isVisible() && btnNextRound.getText().equals(resourceBundle.getString("btn.restart_round"))) {
             roundInfo
-                    .append(resourceBundle.getString("key.draw"));
+                    .append(resourceBundle.getString("lbl.draw"));
         } else {
             roundInfo = new StringBuilder()
                     .append(table.getGameWinner().toString())
-                    .append(resourceBundle.getString("key.won"));
+                    .append(resourceBundle.getString("lbl.won"));
         }
         lblRoundInfo.setText(roundInfo.toString());
     }
@@ -162,7 +152,7 @@ public class GameController implements Initializable {
 
     ListView<Card> createCardsListView(Player player) {
         ListView<Card> cardListView = new ListView<>(player.getPocketCards());
-        cardListView.setId("card-list-view");
+        cardListView.setId("cardListView");
         cardListView.setMinHeight(160);
         cardListView.setOrientation(Orientation.HORIZONTAL);
         cardListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -175,10 +165,10 @@ public class GameController implements Initializable {
                     @Override
                     protected void updateItem(Card item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (item == null || empty || item.getImg() == null)
+                        if (item == null || empty)
                             setGraphic(null);
                         else {
-                            setGraphic(new ImageView(item.getImg()));
+                            setGraphic(item.getImgView());
                         }
                     }
                 };
@@ -210,10 +200,10 @@ public class GameController implements Initializable {
     private void changedOvrrd(ListView<Card> listView) {
         int sum = 0;
         for (Card card : listView.getSelectionModel().getSelectedItems()) {
-            sum += card.getRank().getValue();
+            sum += card.getValue();
         }
         if (sum == 0) lblCardValue.setVisible(false);
         else lblCardValue.setVisible(true);
-        lblCardValue.setText(resourceBundle.getString("key.picked.cards.points") + sum);
+        lblCardValue.setText(resourceBundle.getString("lbl.picked_cards_points") + sum);
     }
 }

@@ -1,10 +1,7 @@
 package game;
 
 import controllers.GameController;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.LinkedList;
 
 public class Table {
     private final int DECK_SIZE = 32;
@@ -13,18 +10,17 @@ public class Table {
     private Player currentPlayer;
     private Player roundWinner;
     private Player gameWinner;
-    private final Player noWinners = new Player(null);
+    private final Player noWinners = new Player();
     private int roundNumber;
     private int numberOfRounds;
 
     private GameController gameController;
 
-    public Table(LinkedList<Player> players) {
+    public Table(ObservableList<Player> players) {
         deck = new Deck(DECK_SIZE);
-        this.players = FXCollections.observableArrayList(players);
+        this.players = players;
         currentPlayer = this.players.get(0);
     }
-
 
     public void startGame(int numberOfRounds) {
         this.numberOfRounds = numberOfRounds;
@@ -42,7 +38,7 @@ public class Table {
         gameController.move();
     }
 
-    public void nextMove () {
+    public void nextMove() {
         if (currentPlayer == players.get(players.size() - 1)) {
             endRound();
             return;
